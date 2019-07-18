@@ -2,7 +2,7 @@
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
-  name: cop-matomo-ingress
+  name: docker-matomo-ingress
   labels:
     stable.k8s.psg.io/kcm.class: default
   annotations:
@@ -16,10 +16,10 @@ spec:
     http:
       paths:
       - backend:
-          serviceName: cop-matomo-service
+          serviceName: docker-matomo-service
           servicePort: 10443
         path: /
   tls:
   - hosts:
       - {{.HOSTNAME}}
-    secretName: cop-matomo-ingress-tls
+    secretName: docker-matomo-ingress-tls

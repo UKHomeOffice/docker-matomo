@@ -2,21 +2,21 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: cop-matomo
+  name: docker-matomo
 spec:
   selector:
     matchLabels:
-      app: cop-matomo
+      app: docker-matomo
   replicas: 1
   revisionHistoryLimit: 3
   template:
     metadata:
       labels:
-        app: cop-matomo
+        app: docker-matomo
     spec:
       containers:
-        - name: matomo
-          image: quay.io/ukhomeofficedigital/cop-matomo:{{.DRONE_COMMIT_SHA}}
+        - name: docker-matomo
+          image: quay.io/ukhomeofficedigital/docker-matomo:{{.DRONE_COMMIT_SHA}}
           imagePullPolicy: Always
           securityContext:
           runAsNonRoot: true

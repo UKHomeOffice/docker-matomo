@@ -1,9 +1,9 @@
+# Note: This docker compose template is to create matomo and mysql locally along with DB creation (DBSetup.sql). Environment varibles has to update.
 version: '3.7'
 services:
   mysql:
-    image: mysql:5.7
+    image: quay.io/ukhomeofficedigital/mysql
     container_name: mysql
-    user: '999'
     environment:
       - MYSQL_ROOT_HOST=hostname
       - MYSQL_ROOT_PASSWORD=rootpassword
@@ -15,7 +15,7 @@ services:
       - mysql:/var/lib/mysql
       - ./docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
   matomo:
-    image: quay.io/ukhomeofficedigital/cop-matomo:latest
+    image: quay.io/ukhomeofficedigital/docker-matomo:latest
     container_name: matomo
     environment:
       - MATOMO_HOST=mysql_hostname

@@ -1,4 +1,4 @@
-# COP Docker-Matomo
+# Docker-Matomo
 
 This Matomo is being developed by the UK Home Office. This Matomo is a web analytics software platform.
 

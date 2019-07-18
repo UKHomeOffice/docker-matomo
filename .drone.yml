@@ -3,7 +3,7 @@ pipeline:
   build:
     image: quay.io/ukhomeofficedigital/drone-docker
     commands:
-      - docker build -t cop-matomo:$${DRONE_COMMIT_SHA} .
+      - docker build -t docker-matomo:$${DRONE_COMMIT_SHA} .
     when:
       event: push
 
@@ -13,7 +13,7 @@ pipeline:
       - DOCKER_USERNAME
       - DOCKER_PASSWORD
     registry: quay.io
-    repo: quay.io/ukhomeofficedigital/cop-matomo
+    repo: quay.io/ukhomeofficedigital/docker-matomo
     tags:
       - ${DRONE_BUILD_NUMBER}
       - ${DRONE_COMMIT_SHA}

@@ -2,11 +2,11 @@
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
-  name: allow-cop-matomo
+  name: allow-docker-matomo
 spec:
   podSelector:
     matchLabels:
-      app: cop-matomo
+      app: docker-matomo
   ingress:
   - from:
     - namespaceSelector:
