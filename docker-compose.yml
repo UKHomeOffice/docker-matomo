@@ -1,0 +1,37 @@
+version: '3.7'
+services:
+  mysql:
+    image: mysql:5.7
+    container_name: mysql
+    user: '999'
+    environment:
+      - MYSQL_ROOT_HOST=hostname
+      - MYSQL_ROOT_PASSWORD=rootpassword
+      - MYSQL_USER=mysqluser
+      - MYSQL_PASSWORD=mysqlpassword
+      - MYSQL_DATABASE=mysqldatabase
+      - MYSQL_PORT_NUMBER=3306
+    volumes:
+      - mysql:/var/lib/mysql
+      - ./docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
+  matomo:
+    image: quay.io/ukhomeofficedigital/cop-matomo:latest
+    container_name: matomo
+    environment:
+      - MATOMO_HOST=mysql_hostname
+      - MATOMO_MYSQL_HOST=matomo_hostname
+      - MATOMO_MYSQL_PORT=3306
+      - MATOMO_MYSQL_USER=mysqluser
+      - MATOMO_MYSQL_PASSWORD=mysqlpassword
+      - MATOMO_MYSQL_DBNAME=mysqldatabase
+    ports:
+      - '9000:9000'
+    depends_on:
+      - mysql
+    volumes:
+      - 'matomo:/var/www/html'
+volumes:
+  mysql:
+    driver: local
+  matomo:
+    driver: local
