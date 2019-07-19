@@ -28,15 +28,15 @@ spec:
 
           env:
             - name: MATOMO_MYSQL_HOST
-              value: {{.MATOMO_MYSQL_HOST}}
+              value: '{{.MATOMO_MYSQL_HOST}}'
             - name: MATOMO_MYSQL_DBNAME
-              value: {{.MATOMO_MYSQL_DBNAME}}
+              value: '{{.MATOMO_MYSQL_DBNAME}}'
             - name: MATOMO_MYSQL_USER
-              value: {{.MATOMO_MYSQL_USER}}
+              value: '{{.MATOMO_MYSQL_USER}}'
             - name: MATOMO_MYSQL_PASSWORD
-              value: {{.MATOMO_MYSQL_PASSWORD}}
+              value: '{{.MATOMO_MYSQL_PASSWORD}}'
             - name: MATOMO_MYSQL_PORT
-              value: {{.MATOMO_MYSQL_PORT}}
+              value: '{{.MATOMO_MYSQL_PORT}}'
 
         - name: proxy
           image: quay.io/ukhomeofficedigital/nginx-proxy
