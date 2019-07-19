@@ -1,0 +1,59 @@
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: docker-matomo
+spec:
+  selector:
+    matchLabels:
+      app: docker-matomo
+  replicas: 1
+  revisionHistoryLimit: 3
+  template:
+    metadata:
+      labels:
+        app: docker-matomo
+    spec:
+      containers:
+        - name: docker-matomo
+          image: quay.io/ukhomeofficedigital/docker-matomo:{{.DRONE_COMMIT_SHA}}
+          imagePullPolicy: Always
+          securityContext:
+          runAsNonRoot: true
+          runAsUser: 33
+          ports:
+            - name: http
+              containerPort: 9000
+              protocol: TCP
+
+          env:
+            - name: MATOMO_MYSQL_HOST
+              value: {{.MATOMO_MYSQL_HOST}}
+            - name: MATOMO_MYSQL_DBNAME
+              value: {{.MATOMO_MYSQL_DBNAME}}
+            - name: MATOMO_MYSQL_USER
+              value: {{.MATOMO_MYSQL_USER}}
+            - name: MATOMO_MYSQL_PASSWORD
+              value: {{.MATOMO_MYSQL_PASSWORD}}
+            - name: MATOMO_MYSQL_PORT
+              value: {{.MATOMO_MYSQL_PORT}}
+
+        - name: proxy
+          image: quay.io/ukhomeofficedigital/nginx-proxy
+          imagePullPolicy: Always
+          securityContext:
+            runAsNonRoot: true
+          env:
+            - name: PROXY_SERVICE_HOST
+              value: 'http://127.0.0.1'
+            - name: PROXY_SERVICE_PORT
+              value: '9000'
+            - name: LOG_FORMAT_NAME
+              value: 'json'
+            - name: NAXSI_USE_DEFAULT_RULES
+              value: 'FALSE'
+            - name: ENABLE_UUID_PARAM
+              value: 'FALSE'
+          ports:
+            - name: https
+              containerPort: 10443
