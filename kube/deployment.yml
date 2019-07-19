@@ -19,8 +19,8 @@ spec:
           image: quay.io/ukhomeofficedigital/docker-matomo:{{.DRONE_COMMIT_SHA}}
           imagePullPolicy: Always
           securityContext:
-          runAsNonRoot: true
-          runAsUser: 33
+            runAsNonRoot: true
+            runAsUser: 33
           ports:
             - name: http
               containerPort: 9000
