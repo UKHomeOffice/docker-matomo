@@ -79,8 +79,9 @@ pipeline:
       - kd --insecure-skip-tls-verify -f kube/deployment.yml
       - kd --insecure-skip-tls-verify -f kube/ingress.yml
     when:
-      branch: deployment
-      event: staging
+      branch: master
+      event: deployment
+      environment: staging
 
   deploy_to_production:
     image: quay.io/ukhomeofficedigital/kd
@@ -109,5 +110,6 @@ pipeline:
       - kd --insecure-skip-tls-verify -f kube/deployment.yml
       - kd --insecure-skip-tls-verify -f kube/ingress.yml
     when:
-      branch: deployment
-      event: production
+      branch: master
+      event: deployment
+      environment: production
