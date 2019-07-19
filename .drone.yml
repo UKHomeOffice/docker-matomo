@@ -79,7 +79,7 @@ pipeline:
       - kd --insecure-skip-tls-verify -f kube/deployment.yml
       - kd --insecure-skip-tls-verify -f kube/ingress.yml
     when:
-      branch: master
+      branch: deployment
       event: staging
 
   deploy_to_production:
@@ -109,5 +109,5 @@ pipeline:
       - kd --insecure-skip-tls-verify -f kube/deployment.yml
       - kd --insecure-skip-tls-verify -f kube/ingress.yml
     when:
-      branch: master
+      branch: deployment
       event: production
