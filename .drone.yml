@@ -51,3 +51,65 @@ pipeline:
     when:
       branch: master
       event: push
+
+  deploy_to_staging:
+    image: quay.io/ukhomeofficedigital/kd
+    secrets:
+      - STAGING_HOSTNAME
+      - STAGING_KUBE_NAMESPACE
+      - STAGING_KUBE_SERVER
+      - STAGING_KUBE_TOKEN
+      - STAGING_MATOMO_MYSQL_HOST
+      - STAGING_MATOMO_MYSQL_DBNAME
+      - STAGING_MATOMO_MYSQL_USER
+      - STAGING_MATOMO_MYSQL_PASSWORD
+      - STAGING_MATOMO_MYSQL_PORT
+    commands:
+      - export HOSTNAME=$${STAGING_HOSTNAME}
+      - export KUBE_NAMESPACE=$${STAGING_KUBE_NAMESPACE}
+      - export KUBE_SERVER=$${STAGING_KUBE_SERVER}
+      - export KUBE_TOKEN=$${STAGING_KUBE_TOKEN}
+      - export MATOMO_MYSQL_HOST=$${STAGING_MATOMO_MYSQL_HOST}
+      - export MATOMO_MYSQL_DBNAME=$${STAGING_MATOMO_MYSQL_DBNAME}
+      - export MATOMO_MYSQL_USER=$${STAGING_MATOMO_MYSQL_USER}
+      - export MATOMO_MYSQL_PASSWORD=$${STAGING_MATOMO_MYSQL_PASSWORD}
+      - export MATOMO_MYSQL_PORT=$${STAGING_MATOMO_MYSQL_PORT}
+      - kd --insecure-skip-tls-verify -f kube/service.yml
+      - kd --insecure-skip-tls-verify -f kube/network-policy.yml
+      - kd --insecure-skip-tls-verify -f kube/deployment.yml
+      - kd --insecure-skip-tls-verify -f kube/ingress.yml
+    when:
+      branch: master
+      event: deployment
+      environment: staging
+
+  deploy_to_production:
+    image: quay.io/ukhomeofficedigital/kd
+    secrets:
+      - PROD_HOSTNAME
+      - PROD_KUBE_NAMESPACE
+      - PROD_KUBE_SERVER
+      - PROD_KUBE_TOKEN
+      - PROD_MATOMO_MYSQL_HOST
+      - PROD_MATOMO_MYSQL_DBNAME
+      - PROD_MATOMO_MYSQL_USER
+      - PROD_MATOMO_MYSQL_PASSWORD
+      - PROD_MATOMO_MYSQL_PORT
+    commands:
+      - export HOSTNAME=$${PROD_HOSTNAME}
+      - export KUBE_NAMESPACE=$${PROD_KUBE_NAMESPACE}
+      - export KUBE_SERVER=$${PROD_KUBE_SERVER}
+      - export KUBE_TOKEN=$${PROD_KUBE_TOKEN}
+      - export MATOMO_MYSQL_HOST=$${PROD_MATOMO_MYSQL_HOST}
+      - export MATOMO_MYSQL_DBNAME=$${PROD_MATOMO_MYSQL_DBNAME}
+      - export MATOMO_MYSQL_USER=$${PROD_MATOMO_MYSQL_USER}
+      - export MATOMO_MYSQL_PASSWORD=$${PROD_MATOMO_MYSQL_PASSWORD}
+      - export MATOMO_MYSQL_PORT=$${PROD_MATOMO_MYSQL_PORT}
+      - kd --insecure-skip-tls-verify -f kube/service.yml
+      - kd --insecure-skip-tls-verify -f kube/network-policy.yml
+      - kd --insecure-skip-tls-verify -f kube/deployment.yml
+      - kd --insecure-skip-tls-verify -f kube/ingress.yml
+    when:
+      branch: master
+      event: deployment
+      environment: production
