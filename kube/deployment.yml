@@ -36,6 +36,10 @@ spec:
               value: {{.MATOMO_MYSQL_PASSWORD}}
             - name: MATOMO_MYSQL_PORT
               value: '{{.MATOMO_MYSQL_PORT}}'
+            - name: MATOMO_SALT
+              value: '{{.MATOMO_SALT}}'
+            - name: HOSTNAME
+              value: '{{.HOSTNAME}}
 
         - name: proxy
           image: quay.io/ukhomeofficedigital/nginx-proxy

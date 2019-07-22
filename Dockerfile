@@ -3,6 +3,7 @@ FROM matomo:3.10.0
 ENV USERMAP_UID 33
 
 COPY docker-entrypoint.sh /entrypoint.sh
+COPY config.ini.php /usr/src/matomo/config/
 
 RUN chmod 775 /entrypoint.sh
 
