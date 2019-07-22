@@ -39,7 +39,7 @@ spec:
             - name: MATOMO_SALT
               value: '{{.MATOMO_SALT}}'
             - name: HOSTNAME
-              value: '{{.HOSTNAME}}
+              value: '{{.HOSTNAME}}'
 
         - name: proxy
           image: quay.io/ukhomeofficedigital/nginx-proxy
