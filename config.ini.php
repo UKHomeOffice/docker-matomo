@@ -1,17 +1,17 @@
 ; <?php exit; ?> DO NOT REMOVE THIS LINE
 ; file automatically generated or modified by Matomo; you can manually override the default values in global.ini.php by redefining them in this file.
 [database]
-host = "{MATOMO_MYSQL_HOST}"
-username = "{MATOMO_MYSQL_USER}"
-password = "{MATOMO_MYSQL_PASSWORD}"
-dbname = "{MATOMO_MYSQL_DBNAME}"
-port = "{MATOMO_MYSQL_PORT}"
+host = "{{.MATOMO_MYSQL_HOST}}"
+username = "{{.MATOMO_MYSQL_USER}}"
+password = "{{.MATOMO_MYSQL_PASSWORD}}"
+dbname = "{{.MATOMO_MYSQL_DBNAME}}"
+port = "{{.MATOMO_MYSQL_PORT}}"
 
 [General]
 proxy_client_headers[] = "HTTP_X_FORWARDED_FOR"
 proxy_host_headers[] = "HTTP_X_FORWARDED_HOST"
-salt = "{MATOMO_SALT}"
-trusted_hosts[] = "{HOSTNAME}:10443"
+salt = "{{.MATOMO_SALT}}"
+trusted_hosts[] = "{{.HOSTNAME}}:10443"
 
 [PluginsInstalled]
 PluginsInstalled[] = "Diagnostics"
