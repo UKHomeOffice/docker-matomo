@@ -17,6 +17,7 @@ do
   sed -i 's,{{.MATOMO_MYSQL_USER}},'${MATOMO_MYSQL_USER}',g' $file
   sed -i 's,{{.MATOMO_MYSQL_PASSWORD}},'${MATOMO_MYSQL_PASSWORD}',g' $file
   sed -i 's,{{.MATOMO_MYSQL_DBNAME}},'${MATOMO_MYSQL_DBNAME}',g' $file
+  sed -i 's,{{.MATOMO_MYSQL_TBL_PREFIX}},'${MATOMO_MYSQL_TBL_PREFIX}',g' $file
   sed -i 's,{{.HOSTNAME}},'${HOSTNAME}',g' $file
   sed -i 's,{{.MATOMO_SALT}},'${MATOMO_SALT}',g' $file
 done

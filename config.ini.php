@@ -6,6 +6,7 @@ username = "{{.MATOMO_MYSQL_USER}}"
 password = "{{.MATOMO_MYSQL_PASSWORD}}"
 dbname = "{{.MATOMO_MYSQL_DBNAME}}"
 port = "{{.MATOMO_MYSQL_PORT}}"
+tables_prefix = "{{.MATOMO_MYSQL_TBL_PREFIX}}"
 
 [General]
 proxy_client_headers[] = "HTTP_X_FORWARDED_FOR"

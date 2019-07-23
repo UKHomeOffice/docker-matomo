@@ -34,6 +34,7 @@ pipeline:
       - DEV_MATOMO_MYSQL_USER
       - DEV_MATOMO_MYSQL_PASSWORD
       - DEV_MATOMO_MYSQL_PORT
+      - DEV_MATOMO_MYSQL_TBL_PREFIX
       - DEV_MATOMO_SALT
     commands:
       - export HOSTNAME=$${DEV_HOSTNAME}
@@ -45,6 +46,7 @@ pipeline:
       - export MATOMO_MYSQL_USER=$${DEV_MATOMO_MYSQL_USER}
       - export MATOMO_MYSQL_PASSWORD=$${DEV_MATOMO_MYSQL_PASSWORD}
       - export MATOMO_MYSQL_PORT=$${DEV_MATOMO_MYSQL_PORT}
+      - export MATOMO_MYSQL_TBL_PREFIX=$${DEV_MATOMO_MYSQL_TBL_PREFIX}
       - export MATOMO_SALT=$${DEV_MATOMO_SALT}
       - kd --insecure-skip-tls-verify -f kube/service.yml
       - kd --insecure-skip-tls-verify -f kube/network-policy.yml
@@ -66,6 +68,7 @@ pipeline:
       - STAGING_MATOMO_MYSQL_USER
       - STAGING_MATOMO_MYSQL_PASSWORD
       - STAGING_MATOMO_MYSQL_PORT
+      - STAGING_MATOMO_MYSQL_TBL_PREFIX
       - STAGING_MATOMO_SALT
     commands:
       - export HOSTNAME=$${STAGING_HOSTNAME}
@@ -77,6 +80,7 @@ pipeline:
       - export MATOMO_MYSQL_USER=$${STAGING_MATOMO_MYSQL_USER}
       - export MATOMO_MYSQL_PASSWORD=$${STAGING_MATOMO_MYSQL_PASSWORD}
       - export MATOMO_MYSQL_PORT=$${STAGING_MATOMO_MYSQL_PORT}
+      - export MATOMO_MYSQL_TBL_PREFIX=$${STAGING_MATOMO_MYSQL_TBL_PREFIX}
       - export MATOMO_SALT=$${STAGING_MATOMO_SALT}
       - kd --insecure-skip-tls-verify -f kube/service.yml
       - kd --insecure-skip-tls-verify -f kube/network-policy.yml
@@ -99,6 +103,7 @@ pipeline:
       - PROD_MATOMO_MYSQL_USER
       - PROD_MATOMO_MYSQL_PASSWORD
       - PROD_MATOMO_MYSQL_PORT
+      - PROD_MATOMO_MYSQL_TBL_PREFIX
       - PROD_MATOMO_SALT
     commands:
       - export HOSTNAME=$${PROD_HOSTNAME}
@@ -110,6 +115,7 @@ pipeline:
       - export MATOMO_MYSQL_USER=$${PROD_MATOMO_MYSQL_USER}
       - export MATOMO_MYSQL_PASSWORD=$${PROD_MATOMO_MYSQL_PASSWORD}
       - export MATOMO_MYSQL_PORT=$${PROD_MATOMO_MYSQL_PORT}
+      - export MATOMO_MYSQL_TBL_PREFIX=$${PROD_MATOMO_MYSQL_TBL_PREFIX}
       - export MATOMO_SALT=$${PROD_MATOMO_SALT}
       - kd --insecure-skip-tls-verify -f kube/service.yml
       - kd --insecure-skip-tls-verify -f kube/network-policy.yml
