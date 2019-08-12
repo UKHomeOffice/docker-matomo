@@ -36,6 +36,8 @@ pipeline:
       - DEV_MATOMO_MYSQL_PORT
       - DEV_MATOMO_MYSQL_TBL_PREFIX
       - DEV_MATOMO_SALT
+      - DEV_MATOMO_EMAIL_USER
+      - DEV_MATOMO_EMAIL_PASSWORD
     commands:
       - export HOSTNAME=$${DEV_HOSTNAME}
       - export KUBE_NAMESPACE=$${DEV_KUBE_NAMESPACE}
@@ -48,6 +50,8 @@ pipeline:
       - export MATOMO_MYSQL_PORT=$${DEV_MATOMO_MYSQL_PORT}
       - export MATOMO_MYSQL_TBL_PREFIX=$${DEV_MATOMO_MYSQL_TBL_PREFIX}
       - export MATOMO_SALT=$${DEV_MATOMO_SALT}
+      - export MATOMO_EMAIL_USER=$${DEV_MATOMO_EMAIL_USER}
+      - export MATOMO_EMAIL_PASSWORD=$${DEV_MATOMO_EMAIL_PASSWORD}
       - kd --insecure-skip-tls-verify -f kube/service.yml
       - kd --insecure-skip-tls-verify -f kube/network-policy.yml
       - kd --insecure-skip-tls-verify -f kube/deployment.yml
@@ -70,6 +74,8 @@ pipeline:
       - STAGING_MATOMO_MYSQL_PORT
       - STAGING_MATOMO_MYSQL_TBL_PREFIX
       - STAGING_MATOMO_SALT
+      - STAGING_MATOMO_EMAIL_USER
+      - STAGING_MATOMO_EMAIL_PASSWORD
     commands:
       - export HOSTNAME=$${STAGING_HOSTNAME}
       - export KUBE_NAMESPACE=$${STAGING_KUBE_NAMESPACE}
@@ -82,6 +88,8 @@ pipeline:
       - export MATOMO_MYSQL_PORT=$${STAGING_MATOMO_MYSQL_PORT}
       - export MATOMO_MYSQL_TBL_PREFIX=$${STAGING_MATOMO_MYSQL_TBL_PREFIX}
       - export MATOMO_SALT=$${STAGING_MATOMO_SALT}
+      - export MATOMO_EMAIL_USER=$${STAGING_MATOMO_EMAIL_USER}
+      - export MATOMO_EMAIL_PASSWORD=$${STAGING_MATOMO_EMAIL_PASSWORD}
       - kd --insecure-skip-tls-verify -f kube/service.yml
       - kd --insecure-skip-tls-verify -f kube/network-policy.yml
       - kd --insecure-skip-tls-verify -f kube/deployment.yml
@@ -105,6 +113,8 @@ pipeline:
       - PROD_MATOMO_MYSQL_PORT
       - PROD_MATOMO_MYSQL_TBL_PREFIX
       - PROD_MATOMO_SALT
+      - PROD_MATOMO_EMAIL_USER
+      - PROD_MATOMO_EMAIL_PASSWORD
     commands:
       - export HOSTNAME=$${PROD_HOSTNAME}
       - export KUBE_NAMESPACE=$${PROD_KUBE_NAMESPACE}
@@ -117,6 +127,8 @@ pipeline:
       - export MATOMO_MYSQL_PORT=$${PROD_MATOMO_MYSQL_PORT}
       - export MATOMO_MYSQL_TBL_PREFIX=$${PROD_MATOMO_MYSQL_TBL_PREFIX}
       - export MATOMO_SALT=$${PROD_MATOMO_SALT}
+      - export MATOMO_EMAIL_USER=$${PROD_MATOMO_EMAIL_USER}
+      - export MATOMO_EMAIL_PASSWORD=$${PROD_MATOMO_EMAIL_PASSWORD}
       - kd --insecure-skip-tls-verify -f kube/service.yml
       - kd --insecure-skip-tls-verify -f kube/network-policy.yml
       - kd --insecure-skip-tls-verify -f kube/deployment.yml
