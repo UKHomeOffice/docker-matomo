@@ -20,6 +20,8 @@ do
   sed -i 's,{{.MATOMO_MYSQL_TBL_PREFIX}},'${MATOMO_MYSQL_TBL_PREFIX}',g' $file
   sed -i 's,{{.HOSTNAME}},'${HOSTNAME}',g' $file
   sed -i 's,{{.MATOMO_SALT}},'${MATOMO_SALT}',g' $file
+  sed -i 's,{{.MATOMO_EMAIL_USER}},'${MATOMO_EMAIL_USER}',g' $file
+  sed -i 's,{{.MATOMO_EMAIL_PASSWORD}},'${MATOMO_EMAIL_PASSWORD}',g' $file
 done
 echo "== Finished environment variable substitution =="
 

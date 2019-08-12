@@ -13,6 +13,15 @@ proxy_client_headers[] = "HTTP_X_FORWARDED_FOR"
 proxy_host_headers[] = "HTTP_X_FORWARDED_HOST"
 salt = "{{.MATOMO_SALT}}"
 trusted_hosts[] = "{{.HOSTNAME}}:10443"
+force_ssl = 1
+
+[mail]
+transport = "smtp"
+host = "email-smtp.eu-west-1.amazonaws.com"
+type = "Login"
+username = "{{.MATOMO_EMAIL_USER}}"
+password = "{{.MATOMO_EMAIL_PASSWORD}}"
+encryption = "ssl"
 
 [PluginsInstalled]
 PluginsInstalled[] = "Diagnostics"
