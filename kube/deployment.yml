@@ -44,7 +44,7 @@ spec:
               value: '{{.HOSTNAME}}'
             - name: MATOMO_EMAIL_USER
               value: {{.MATOMO_EMAIL_USER}}
-            - name: MATOMO_EMAIL_PASWORD
+            - name: MATOMO_EMAIL_PASSWORD
               value: {{.MATOMO_EMAIL_PASSWORD}}
 
         - name: proxy
