@@ -40,8 +40,8 @@ spec:
               value: '{{.MATOMO_MYSQL_TBL_PREFIX}}'
             - name: MATOMO_SALT
               value: '{{.MATOMO_SALT}}'
-            - name: MATOMO_URL
-              value: '{{.MATOMO_URL}}'
+            - name: HOSTNAME
+              value: '{{.HOSTNAME}}'
             - name: MATOMO_EMAIL_USER
               value: {{.MATOMO_EMAIL_USER}}
             - name: MATOMO_EMAIL_PASSWORD
