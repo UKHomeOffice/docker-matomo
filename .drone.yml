@@ -1,12 +1,5 @@
 pipeline:
 
-  build:
-    image: quay.io/ukhomeofficedigital/drone-docker
-    commands:
-      - docker build -t docker-matomo:$${DRONE_COMMIT_SHA} .
-    when:
-      event: push
-
   synch_dev_secrets:
     image: quay.io/ukhomeofficedigital/cop-secrets
     environment:
@@ -16,7 +9,7 @@ pipeline:
         target: AWS_ACCESS_KEY_ID
       - source: DEV_DRONE_AWS_SECRET_ACCESS_KEY
         target: AWS_SECRET_ACCESS_KEY
-      - source: DRONE_PRIVATE_TOKEN
+      - source: DRONE_PUBLIC_TOKEN
         target: DRONE_TOKEN
     when:
        event: push
@@ -30,7 +23,7 @@ pipeline:
         target: AWS_ACCESS_KEY_ID
       - source: STAGING_DRONE_AWS_SECRET_ACCESS_KEY
         target: AWS_SECRET_ACCESS_KEY
-      - source: DRONE_PRIVATE_TOKEN
+      - source: DRONE_PUBLIC_TOKEN
         target: DRONE_TOKEN
     when:
       event: deployment
@@ -45,11 +38,18 @@ pipeline:
         target: AWS_ACCESS_KEY_ID
       - source: PRODUCTION_DRONE_AWS_SECRET_ACCESS_KEY
         target: AWS_SECRET_ACCESS_KEY
-      - source: DRONE_PRIVATE_TOKEN
+      - source: DRONE_PUBLIC_TOKEN
         target: DRONE_TOKEN
     when:
       event: deployment
       environment: production
+
+  build:
+    image: quay.io/ukhomeofficedigital/drone-docker
+    commands:
+      - docker build -t docker-matomo:$${DRONE_COMMIT_SHA} .
+    when:
+      event: push
 
   image_to_quay:
     image: quay.io/ukhomeofficedigital/drone-docker
@@ -106,6 +106,7 @@ pipeline:
         target: NGINX_TAG
     commands:
       - export MATOMO_TAG=$${DRONE_COMMIT_SHA}
+      - kd --insecure-skip-tls-verify -f kube/cert.yml
       - kd --insecure-skip-tls-verify -f kube/service.yml
       - kd --insecure-skip-tls-verify -f kube/network-policy.yml
       - kd --insecure-skip-tls-verify -f kube/deployment.yml
@@ -155,6 +156,7 @@ pipeline:
         target: NGINX_TAG
     commands:
       - export MATOMO_TAG=$${DRONE_COMMIT_SHA}
+      - kd --insecure-skip-tls-verify -f kube/cert.yml
       - kd --insecure-skip-tls-verify -f kube/service.yml
       - kd --insecure-skip-tls-verify -f kube/network-policy.yml
       - kd --insecure-skip-tls-verify -f kube/deployment.yml
@@ -204,6 +206,7 @@ pipeline:
         target: NGINX_TAG
     commands:
       - export MATOMO_TAG=$${DRONE_COMMIT_SHA}
+      - kd --insecure-skip-tls-verify -f kube/cert.yml
       - kd --insecure-skip-tls-verify -f kube/service.yml
       - kd --insecure-skip-tls-verify -f kube/network-policy.yml
       - kd --insecure-skip-tls-verify -f kube/deployment.yml
