@@ -7,17 +7,60 @@ pipeline:
     when:
       event: push
 
+  synch_dev_secrets:
+    image: quay.io/ukhomeofficedigital/cop-secrets
+    environment:
+      - DRONE_SERVER=https://drone.acp.homeoffice.gov.uk
+    secrets:
+      - source: DEV_DRONE_AWS_ACCESS_KEY_ID
+        target: AWS_ACCESS_KEY_ID
+      - source: DEV_DRONE_AWS_SECRET_ACCESS_KEY
+        target: AWS_SECRET_ACCESS_KEY
+      - source: DRONE_PRIVATE_TOKEN
+        target: DRONE_TOKEN
+    when:
+       event: push
+
+  synch_staging_secrets:
+    image: quay.io/ukhomeofficedigital/cop-secrets
+    environment:
+      - DRONE_SERVER=https://drone.acp.homeoffice.gov.uk
+    secrets:
+      - source: STAGING_DRONE_AWS_ACCESS_KEY_ID
+        target: AWS_ACCESS_KEY_ID
+      - source: STAGING_DRONE_AWS_SECRET_ACCESS_KEY
+        target: AWS_SECRET_ACCESS_KEY
+      - source: DRONE_PRIVATE_TOKEN
+        target: DRONE_TOKEN
+    when:
+      event: deployment
+      environment: staging
+
+  synch_production_secrets:
+    image: quay.io/ukhomeofficedigital/cop-secrets
+    environment:
+      - DRONE_SERVER=https://drone.acp.homeoffice.gov.uk
+    secrets:
+      - source: PRODUCTION_DRONE_AWS_ACCESS_KEY_ID
+        target: AWS_ACCESS_KEY_ID
+      - source: PRODUCTION_DRONE_AWS_SECRET_ACCESS_KEY
+        target: AWS_SECRET_ACCESS_KEY
+      - source: DRONE_PRIVATE_TOKEN
+        target: DRONE_TOKEN
+    when:
+      event: deployment
+      environment: production
+
   image_to_quay:
     image: quay.io/ukhomeofficedigital/drone-docker
     secrets:
-      - DOCKER_USERNAME
-      - DOCKER_PASSWORD
+    - source: QUAY_USERNAME
+      target: DOCKER_USERNAME
+    - source: QUAY_PASSWORD
+      target: DOCKER_PASSWORD
     registry: quay.io
     repo: quay.io/ukhomeofficedigital/docker-matomo
-    tags:
-      - ${DRONE_BUILD_NUMBER}
-      - ${DRONE_COMMIT_SHA}
-      - latest
+    tags: ${DRONE_COMMIT_SHA}
     when:
       branch: master
       event: push
@@ -25,33 +68,44 @@ pipeline:
   deploy_to_dev:
     image: quay.io/ukhomeofficedigital/kd
     secrets:
-      - DEV_HOSTNAME
-      - DEV_KUBE_NAMESPACE
-      - DEV_KUBE_SERVER
-      - DEV_KUBE_TOKEN
-      - DEV_MATOMO_MYSQL_HOST
-      - DEV_MATOMO_MYSQL_DBNAME
-      - DEV_MATOMO_MYSQL_USER
-      - DEV_MATOMO_MYSQL_PASSWORD
-      - DEV_MATOMO_MYSQL_PORT
-      - DEV_MATOMO_MYSQL_TBL_PREFIX
-      - DEV_MATOMO_SALT
-      - DEV_MATOMO_EMAIL_USER
-      - DEV_MATOMO_EMAIL_PASSWORD
+      - source: DEV_KUBE_NAMESPACE
+        target: KUBE_NAMESPACE
+      - source: DEV_KUBE_SERVER
+        target: KUBE_SERVER
+      - source: DEV_KUBE_TOKEN
+        target: KUBE_TOKEN
+      - source: DEV_MATOMO_MYSQL_HOST
+        target: MATOMO_MYSQL_HOST
+      - source: DEV_MATOMO_MYSQL_DBNAME
+        target: MATOMO_MYSQL_DBNAME
+      - source: DEV_MATOMO_MYSQL_USER
+        target: MATOMO_MYSQL_USER
+      - source: DEV_MATOMO_MYSQL_PASSWORD
+        target: MATOMO_MYSQL_PASSWORD
+      - source: DEV_MATOMO_MYSQL_PORT
+        target: MATOMO_MYSQL_PORT
+      - source: DEV_MATOMO_MYSQL_TBL_PREFIX
+        target: MATOMO_MYSQL_TBL_PREFIX
+      - source: DEV_MATOMO_SALT
+        target: MATOMO_SALT
+      - source: DEV_MATOMO_EMAIL_USER
+        target: MATOMO_EMAIL_USER
+      - source: DEV_MATOMO_EMAIL_PASSWORD
+        target: MATOMO_EMAIL_PASSWORD
+      - source: DEV_MATOMO_NAME
+        target: MATOMO_NAME
+      - source: DEV_MATOMO_IMAGE
+        target: MATOMO_IMAGE
+      - source: DEV_MATOMO_PORT
+        target: MATOMO_PORT
+      - source: DEV_MATOMO_URL
+        target: MATOMO_URL
+      - source: NGINX_IMAGE
+        target: NGINX_IMAGE
+      - source: NGINX_TAG
+        target: NGINX_TAG
     commands:
-      - export HOSTNAME=$${DEV_HOSTNAME}
-      - export KUBE_NAMESPACE=$${DEV_KUBE_NAMESPACE}
-      - export KUBE_SERVER=$${DEV_KUBE_SERVER}
-      - export KUBE_TOKEN=$${DEV_KUBE_TOKEN}
-      - export MATOMO_MYSQL_HOST=$${DEV_MATOMO_MYSQL_HOST}
-      - export MATOMO_MYSQL_DBNAME=$${DEV_MATOMO_MYSQL_DBNAME}
-      - export MATOMO_MYSQL_USER=$${DEV_MATOMO_MYSQL_USER}
-      - export MATOMO_MYSQL_PASSWORD=$${DEV_MATOMO_MYSQL_PASSWORD}
-      - export MATOMO_MYSQL_PORT=$${DEV_MATOMO_MYSQL_PORT}
-      - export MATOMO_MYSQL_TBL_PREFIX=$${DEV_MATOMO_MYSQL_TBL_PREFIX}
-      - export MATOMO_SALT=$${DEV_MATOMO_SALT}
-      - export MATOMO_EMAIL_USER=$${DEV_MATOMO_EMAIL_USER}
-      - export MATOMO_EMAIL_PASSWORD=$${DEV_MATOMO_EMAIL_PASSWORD}
+      - export MATOMO_TAG=$${DRONE_COMMIT_SHA}
       - kd --insecure-skip-tls-verify -f kube/service.yml
       - kd --insecure-skip-tls-verify -f kube/network-policy.yml
       - kd --insecure-skip-tls-verify -f kube/deployment.yml
@@ -63,78 +117,98 @@ pipeline:
   deploy_to_staging:
     image: quay.io/ukhomeofficedigital/kd
     secrets:
-      - STAGING_HOSTNAME
-      - STAGING_KUBE_NAMESPACE
-      - STAGING_KUBE_SERVER
-      - STAGING_KUBE_TOKEN
-      - STAGING_MATOMO_MYSQL_HOST
-      - STAGING_MATOMO_MYSQL_DBNAME
-      - STAGING_MATOMO_MYSQL_USER
-      - STAGING_MATOMO_MYSQL_PASSWORD
-      - STAGING_MATOMO_MYSQL_PORT
-      - STAGING_MATOMO_MYSQL_TBL_PREFIX
-      - STAGING_MATOMO_SALT
-      - STAGING_MATOMO_EMAIL_USER
-      - STAGING_MATOMO_EMAIL_PASSWORD
+      - source: STAGING_KUBE_NAMESPACE
+        target: KUBE_NAMESPACE
+      - source: STAGING_KUBE_SERVER
+        target: KUBE_SERVER
+      - source: STAGING_KUBE_TOKEN
+        target: KUBE_TOKEN
+      - source: STAGING_MATOMO_MYSQL_HOST
+        target: MATOMO_MYSQL_HOST
+      - source: STAGING_MATOMO_MYSQL_DBNAME
+        target: MATOMO_MYSQL_DBNAME
+      - source: STAGING_MATOMO_MYSQL_USER
+        target: MATOMO_MYSQL_USER
+      - source: STAGING_MATOMO_MYSQL_PASSWORD
+        target: MATOMO_MYSQL_PASSWORD
+      - source: STAGING_MATOMO_MYSQL_PORT
+        target: MATOMO_MYSQL_PORT
+      - source: STAGING_MATOMO_MYSQL_TBL_PREFIX
+        target: MATOMO_MYSQL_TBL_PREFIX
+      - source: STAGING_MATOMO_SALT
+        target: MATOMO_SALT
+      - source: STAGING_MATOMO_EMAIL_USER
+        target: MATOMO_EMAIL_USER
+      - source: STAGING_MATOMO_EMAIL_PASSWORD
+        target: MATOMO_EMAIL_PASSWORD
+      - source: STAGING_MATOMO_NAME
+        target: MATOMO_NAME
+      - source: STAGING_MATOMO_IMAGE
+        target: MATOMO_IMAGE
+      - source: STAGING_MATOMO_PORT
+        target: MATOMO_PORT
+      - source: STAGING_MATOMO_URL
+        target: MATOMO_URL
+      - source: NGINX_IMAGE
+        target: NGINX_IMAGE
+      - source: NGINX_TAG
+        target: NGINX_TAG
     commands:
-      - export HOSTNAME=$${STAGING_HOSTNAME}
-      - export KUBE_NAMESPACE=$${STAGING_KUBE_NAMESPACE}
-      - export KUBE_SERVER=$${STAGING_KUBE_SERVER}
-      - export KUBE_TOKEN=$${STAGING_KUBE_TOKEN}
-      - export MATOMO_MYSQL_HOST=$${STAGING_MATOMO_MYSQL_HOST}
-      - export MATOMO_MYSQL_DBNAME=$${STAGING_MATOMO_MYSQL_DBNAME}
-      - export MATOMO_MYSQL_USER=$${STAGING_MATOMO_MYSQL_USER}
-      - export MATOMO_MYSQL_PASSWORD=$${STAGING_MATOMO_MYSQL_PASSWORD}
-      - export MATOMO_MYSQL_PORT=$${STAGING_MATOMO_MYSQL_PORT}
-      - export MATOMO_MYSQL_TBL_PREFIX=$${STAGING_MATOMO_MYSQL_TBL_PREFIX}
-      - export MATOMO_SALT=$${STAGING_MATOMO_SALT}
-      - export MATOMO_EMAIL_USER=$${STAGING_MATOMO_EMAIL_USER}
-      - export MATOMO_EMAIL_PASSWORD=$${STAGING_MATOMO_EMAIL_PASSWORD}
+      - export MATOMO_TAG=$${DRONE_COMMIT_SHA}
       - kd --insecure-skip-tls-verify -f kube/service.yml
       - kd --insecure-skip-tls-verify -f kube/network-policy.yml
       - kd --insecure-skip-tls-verify -f kube/deployment.yml
       - kd --insecure-skip-tls-verify -f kube/ingress.yml
     when:
-      branch: master
       event: deployment
       environment: staging
 
   deploy_to_production:
     image: quay.io/ukhomeofficedigital/kd
     secrets:
-      - PROD_HOSTNAME
-      - PROD_KUBE_NAMESPACE
-      - PROD_KUBE_SERVER
-      - PROD_KUBE_TOKEN
-      - PROD_MATOMO_MYSQL_HOST
-      - PROD_MATOMO_MYSQL_DBNAME
-      - PROD_MATOMO_MYSQL_USER
-      - PROD_MATOMO_MYSQL_PASSWORD
-      - PROD_MATOMO_MYSQL_PORT
-      - PROD_MATOMO_MYSQL_TBL_PREFIX
-      - PROD_MATOMO_SALT
-      - PROD_MATOMO_EMAIL_USER
-      - PROD_MATOMO_EMAIL_PASSWORD
+      - source: PRODUCTION_KUBE_NAMESPACE
+        target: KUBE_NAMESPACE
+      - source: PRODUCTION_KUBE_SERVER
+        target: KUBE_SERVER
+      - source: PRODUCTION_KUBE_TOKEN
+        target: KUBE_TOKEN
+      - source: PRODUCTION_MATOMO_MYSQL_HOST
+        target: MATOMO_MYSQL_HOST
+      - source: PRODUCTION_MATOMO_MYSQL_DBNAME
+        target: MATOMO_MYSQL_DBNAME
+      - source: PRODUCTION_MATOMO_MYSQL_USER
+        target: MATOMO_MYSQL_USER
+      - source: PRODUCTION_MATOMO_MYSQL_PASSWORD
+        target: MATOMO_MYSQL_PASSWORD
+      - source: PRODUCTION_MATOMO_MYSQL_PORT
+        target: MATOMO_MYSQL_PORT
+      - source: PRODUCTION_MATOMO_MYSQL_TBL_PREFIX
+        target: MATOMO_MYSQL_TBL_PREFIX
+      - source: PRODUCTION_MATOMO_SALT
+        target: MATOMO_SALT
+      - source: PRODUCTION_MATOMO_EMAIL_USER
+        target: MATOMO_EMAIL_USER
+      - source: PRODUCTION_MATOMO_EMAIL_PASSWORD
+        target: MATOMO_EMAIL_PASSWORD
+      - source: PRODUCTION_MATOMO_NAME
+        target: MATOMO_NAME
+      - source: PRODUCTION_MATOMO_IMAGE
+        target: MATOMO_IMAGE
+      - source: PRODUCTION_MATOMO_PORT
+        target: MATOMO_PORT
+      - source: PRODUCTION_MATOMO_URL
+        target: MATOMO_URL
+      - source: NGINX_IMAGE
+        target: NGINX_IMAGE
+      - source: NGINX_TAG
+        target: NGINX_TAG
     commands:
-      - export HOSTNAME=$${PROD_HOSTNAME}
-      - export KUBE_NAMESPACE=$${PROD_KUBE_NAMESPACE}
-      - export KUBE_SERVER=$${PROD_KUBE_SERVER}
-      - export KUBE_TOKEN=$${PROD_KUBE_TOKEN}
-      - export MATOMO_MYSQL_HOST=$${PROD_MATOMO_MYSQL_HOST}
-      - export MATOMO_MYSQL_DBNAME=$${PROD_MATOMO_MYSQL_DBNAME}
-      - export MATOMO_MYSQL_USER=$${PROD_MATOMO_MYSQL_USER}
-      - export MATOMO_MYSQL_PASSWORD=$${PROD_MATOMO_MYSQL_PASSWORD}
-      - export MATOMO_MYSQL_PORT=$${PROD_MATOMO_MYSQL_PORT}
-      - export MATOMO_MYSQL_TBL_PREFIX=$${PROD_MATOMO_MYSQL_TBL_PREFIX}
-      - export MATOMO_SALT=$${PROD_MATOMO_SALT}
-      - export MATOMO_EMAIL_USER=$${PROD_MATOMO_EMAIL_USER}
-      - export MATOMO_EMAIL_PASSWORD=$${PROD_MATOMO_EMAIL_PASSWORD}
+      - export MATOMO_TAG=$${DRONE_COMMIT_SHA}
       - kd --insecure-skip-tls-verify -f kube/service.yml
       - kd --insecure-skip-tls-verify -f kube/network-policy.yml
       - kd --insecure-skip-tls-verify -f kube/deployment.yml
       - kd --insecure-skip-tls-verify -f kube/ingress.yml
     when:
-      branch: master
       event: deployment
       environment: production
 
