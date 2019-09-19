@@ -2,28 +2,28 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: docker-matomo
+  name: {{.MATOMO_NAME}}
 spec:
   selector:
     matchLabels:
-      app: docker-matomo
+      app: {{.MATOMO_NAME}}
   replicas: 1
   revisionHistoryLimit: 3
   template:
     metadata:
       labels:
-        app: docker-matomo
+        app: {{.MATOMO_NAME}}
     spec:
       containers:
-        - name: docker-matomo
-          image: quay.io/ukhomeofficedigital/docker-matomo:{{.DRONE_COMMIT_SHA}}
+        - name: matomo
+          image: "{{.MATOMO_IMAGE}}:{{.MATOMO_TAG}}"
           imagePullPolicy: Always
           securityContext:
             runAsNonRoot: true
             runAsUser: 33
           ports:
             - name: http
-              containerPort: 9000
+              containerPort: {{.MATOMO_PORT}}
               protocol: TCP
           env:
             - name: MATOMO_MYSQL_HOST
@@ -40,15 +40,17 @@ spec:
               value: '{{.MATOMO_MYSQL_TBL_PREFIX}}'
             - name: MATOMO_SALT
               value: '{{.MATOMO_SALT}}'
-            - name: HOSTNAME
-              value: '{{.HOSTNAME}}'
+            - name: MATOMO_URL
+              value: '{{.MATOMO_URL}}'
             - name: MATOMO_EMAIL_USER
               value: {{.MATOMO_EMAIL_USER}}
             - name: MATOMO_EMAIL_PASSWORD
               value: {{.MATOMO_EMAIL_PASSWORD}}
+            - name: MATOMO_PORT
+              value: '{{.MATOMO_PORT}}'
 
         - name: proxy
-          image: quay.io/ukhomeofficedigital/nginx-proxy
+          image: "{{.NGINX_IMAGE}}:{{.NGINX_TAG}}"
           imagePullPolicy: Always
           securityContext:
             runAsNonRoot: true
@@ -56,7 +58,7 @@ spec:
             - name: PROXY_SERVICE_HOST
               value: 'http://127.0.0.1'
             - name: PROXY_SERVICE_PORT
-              value: '9000'
+              value: "{{.MATOMO_PORT}}"
             - name: LOG_FORMAT_NAME
               value: 'json'
             - name: NAXSI_USE_DEFAULT_RULES
@@ -66,3 +68,10 @@ spec:
           ports:
             - name: https
               containerPort: 10443
+          volumeMounts:
+          - name: certs
+            mountPath: /certs
+      volumes:
+      - name: certs
+        secret:
+          secretName: "{{.MATOMO_NAME}}-pod-tls"

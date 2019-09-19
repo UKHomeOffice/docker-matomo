@@ -1,0 +1,14 @@
+---
+apiVersion: certmanager.k8s.io/v1alpha1
+kind: Certificate
+metadata:
+  name: {{.MATOMO_NAME}}-pod-tls
+spec:
+  secretName: {{.MATOMO_NAME}}-pod-tls
+  issuerRef:
+    name: platform-tls
+    kind: ClusterIssuer
+  commonName: {{.MATOMO_NAME}}.{{.KUBE_NAMESPACE}}.svc.cluster.local
+  dnsNames:
+  - localhost
+  - 127.0.0.1

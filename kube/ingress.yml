@@ -2,24 +2,24 @@
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
-  name: docker-matomo-ingress
+  name: {{.MATOMO_NAME}}-ingress
   labels:
     stable.k8s.psg.io/kcm.class: default
   annotations:
     kubernetes.io/ingress.class: "nginx-external"
-    ingress.kubernetes.io/secure-backends: "true"
+    ingress.kubernetes.io/force-ssl-redirect: "true"
     ingress.kubernetes.io/backend-protocol: "HTTPS"
     stable.k8s.psg.io/kcm.provider: http
 spec:
   rules:
-  - host: {{.HOSTNAME}}
+  - host: {{.MATOMO_URL}}
     http:
       paths:
       - backend:
-          serviceName: docker-matomo-service
+          serviceName: {{.MATOMO_NAME}}-service
           servicePort: 10443
         path: /
   tls:
   - hosts:
-      - {{.HOSTNAME}}
-    secretName: docker-matomo-ingress-tls
+      - {{.MATOMO_URL}}
+    secretName: {{.MATOMO_NAME}}-ingress-tls
