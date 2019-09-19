@@ -98,8 +98,8 @@ pipeline:
         target: MATOMO_IMAGE
       - source: DEV_MATOMO_PORT
         target: MATOMO_PORT
-      - source: DEV_MATOMO_URL
-        target: MATOMO_URL
+      - source: DEV_MATOMO_HOSTNAME
+        target: HOSTNAME
       - source: NGINX_IMAGE
         target: NGINX_IMAGE
       - source: NGINX_TAG
@@ -148,8 +148,8 @@ pipeline:
         target: MATOMO_IMAGE
       - source: STAGING_MATOMO_PORT
         target: MATOMO_PORT
-      - source: STAGING_MATOMO_URL
-        target: MATOMO_URL
+      - source: STAGING_MATOMO_HOSTNAME
+        target: HOSTNAME
       - source: NGINX_IMAGE
         target: NGINX_IMAGE
       - source: NGINX_TAG
@@ -198,8 +198,8 @@ pipeline:
         target: MATOMO_IMAGE
       - source: PRODUCTION_MATOMO_PORT
         target: MATOMO_PORT
-      - source: PRODUCTION_MATOMO_URL
-        target: MATOMO_URL
+      - source: PRODUCTION_MATOMO_HOSTNAME
+        target: HOSTNAME
       - source: NGINX_IMAGE
         target: NGINX_IMAGE
       - source: NGINX_TAG

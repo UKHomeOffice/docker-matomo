@@ -12,7 +12,7 @@ metadata:
     stable.k8s.psg.io/kcm.provider: http
 spec:
   rules:
-  - host: {{.MATOMO_URL}}
+  - host: {{.HOSTNAME}}
     http:
       paths:
       - backend:
@@ -21,5 +21,5 @@ spec:
         path: /
   tls:
   - hosts:
-      - {{.MATOMO_URL}}
+      - {{.HOSTNAME}}
     secretName: {{.MATOMO_NAME}}-ingress-tls
