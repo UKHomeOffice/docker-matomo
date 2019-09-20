@@ -68,12 +68,20 @@ pipeline:
   deploy_to_dev:
     image: quay.io/ukhomeofficedigital/kd
     secrets:
-      - source: DEV_KUBE_NAMESPACE
-        target: KUBE_NAMESPACE
       - source: DEV_KUBE_SERVER
         target: KUBE_SERVER
       - source: DEV_KUBE_TOKEN
         target: KUBE_TOKEN
+      - source: DEV_MATOMO_EMAIL_USER
+        target: MATOMO_EMAIL_USER
+      - source: DEV_MATOMO_EMAIL_PASSWORD
+        target: MATOMO_EMAIL_PASSWORD
+      - source: DEV_MATOMO_HOSTNAME
+        target: HOSTNAME
+      - source: DEV_MATOMO_IMAGE
+        target: MATOMO_IMAGE
+      - source: DEV_MATOMO_KUBE_NAMESPACE
+        target: KUBE_NAMESPACE
       - source: DEV_MATOMO_MYSQL_HOST
         target: MATOMO_MYSQL_HOST
       - source: DEV_MATOMO_MYSQL_DBNAME
@@ -86,20 +94,12 @@ pipeline:
         target: MATOMO_MYSQL_PORT
       - source: DEV_MATOMO_MYSQL_TBL_PREFIX
         target: MATOMO_MYSQL_TBL_PREFIX
-      - source: DEV_MATOMO_SALT
-        target: MATOMO_SALT
-      - source: DEV_MATOMO_EMAIL_USER
-        target: MATOMO_EMAIL_USER
-      - source: DEV_MATOMO_EMAIL_PASSWORD
-        target: MATOMO_EMAIL_PASSWORD
       - source: DEV_MATOMO_NAME
         target: MATOMO_NAME
-      - source: DEV_MATOMO_IMAGE
-        target: MATOMO_IMAGE
       - source: DEV_MATOMO_PORT
         target: MATOMO_PORT
-      - source: DEV_MATOMO_HOSTNAME
-        target: HOSTNAME
+      - source: DEV_MATOMO_SALT
+        target: MATOMO_SALT
       - source: NGINX_IMAGE
         target: NGINX_IMAGE
       - source: NGINX_TAG
@@ -118,12 +118,20 @@ pipeline:
   deploy_to_staging:
     image: quay.io/ukhomeofficedigital/kd
     secrets:
-      - source: STAGING_KUBE_NAMESPACE
-        target: KUBE_NAMESPACE
       - source: STAGING_KUBE_SERVER
         target: KUBE_SERVER
       - source: STAGING_KUBE_TOKEN
         target: KUBE_TOKEN
+      - source: STAGING_MATOMO_EMAIL_USER
+        target: MATOMO_EMAIL_USER
+      - source: STAGING_MATOMO_EMAIL_PASSWORD
+        target: MATOMO_EMAIL_PASSWORD
+      - source: STAGING_MATOMO_HOSTNAME
+        target: HOSTNAME
+      - source: STAGING_MATOMO_IMAGE
+        target: MATOMO_IMAGE
+      - source: STAGING_MATOMO_KUBE_NAMESPACE
+        target: KUBE_NAMESPACE
       - source: STAGING_MATOMO_MYSQL_HOST
         target: MATOMO_MYSQL_HOST
       - source: STAGING_MATOMO_MYSQL_DBNAME
@@ -136,20 +144,12 @@ pipeline:
         target: MATOMO_MYSQL_PORT
       - source: STAGING_MATOMO_MYSQL_TBL_PREFIX
         target: MATOMO_MYSQL_TBL_PREFIX
-      - source: STAGING_MATOMO_SALT
-        target: MATOMO_SALT
-      - source: STAGING_MATOMO_EMAIL_USER
-        target: MATOMO_EMAIL_USER
-      - source: STAGING_MATOMO_EMAIL_PASSWORD
-        target: MATOMO_EMAIL_PASSWORD
       - source: STAGING_MATOMO_NAME
         target: MATOMO_NAME
-      - source: STAGING_MATOMO_IMAGE
-        target: MATOMO_IMAGE
       - source: STAGING_MATOMO_PORT
         target: MATOMO_PORT
-      - source: STAGING_MATOMO_HOSTNAME
-        target: HOSTNAME
+      - source: STAGING_MATOMO_SALT
+        target: MATOMO_SALT
       - source: NGINX_IMAGE
         target: NGINX_IMAGE
       - source: NGINX_TAG
@@ -168,12 +168,20 @@ pipeline:
   deploy_to_production:
     image: quay.io/ukhomeofficedigital/kd
     secrets:
-      - source: PRODUCTION_KUBE_NAMESPACE
-        target: KUBE_NAMESPACE
       - source: PRODUCTION_KUBE_SERVER
         target: KUBE_SERVER
       - source: PRODUCTION_KUBE_TOKEN
         target: KUBE_TOKEN
+      - source: PRODUCTION_MATOMO_EMAIL_USER
+        target: MATOMO_EMAIL_USER
+      - source: PRODUCTION_MATOMO_EMAIL_PASSWORD
+        target: MATOMO_EMAIL_PASSWORD
+      - source: PRODUCTION_MATOMO_HOSTNAME
+        target: HOSTNAME
+      - source: PRODUCTION_MATOMO_IMAGE
+        target: MATOMO_IMAGE
+      - source: PRODUCTION_MATOMO_KUBE_NAMESPACE
+        target: KUBE_NAMESPACE
       - source: PRODUCTION_MATOMO_MYSQL_HOST
         target: MATOMO_MYSQL_HOST
       - source: PRODUCTION_MATOMO_MYSQL_DBNAME
@@ -188,18 +196,10 @@ pipeline:
         target: MATOMO_MYSQL_TBL_PREFIX
       - source: PRODUCTION_MATOMO_SALT
         target: MATOMO_SALT
-      - source: PRODUCTION_MATOMO_EMAIL_USER
-        target: MATOMO_EMAIL_USER
-      - source: PRODUCTION_MATOMO_EMAIL_PASSWORD
-        target: MATOMO_EMAIL_PASSWORD
       - source: PRODUCTION_MATOMO_NAME
         target: MATOMO_NAME
-      - source: PRODUCTION_MATOMO_IMAGE
-        target: MATOMO_IMAGE
       - source: PRODUCTION_MATOMO_PORT
         target: MATOMO_PORT
-      - source: PRODUCTION_MATOMO_HOSTNAME
-        target: HOSTNAME
       - source: NGINX_IMAGE
         target: NGINX_IMAGE
       - source: NGINX_TAG
