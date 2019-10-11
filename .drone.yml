@@ -11,6 +11,8 @@ pipeline:
         target: AWS_SECRET_ACCESS_KEY
       - source: DRONE_PUBLIC_TOKEN
         target: DRONE_TOKEN
+    commands:
+      - export DRONE_DEPLOY_TO=dev
     when:
        event: push
 
@@ -25,6 +27,8 @@ pipeline:
         target: AWS_SECRET_ACCESS_KEY
       - source: DRONE_PUBLIC_TOKEN
         target: DRONE_TOKEN
+    commands:
+      - export DRONE_DEPLOY_TO=staging
     when:
       branch: master
       event: push
@@ -40,6 +44,8 @@ pipeline:
         target: AWS_SECRET_ACCESS_KEY
       - source: DRONE_PUBLIC_TOKEN
         target: DRONE_TOKEN
+    commands:
+      - export DRONE_DEPLOY_TO=production
     when:
       branch: master
       event: push
