@@ -11,8 +11,6 @@ pipeline:
         target: AWS_SECRET_ACCESS_KEY
       - source: DRONE_PUBLIC_TOKEN
         target: DRONE_TOKEN
-    commands:
-      - export DRONE_DEPLOY_TO=dev
     when:
        event: push
 
