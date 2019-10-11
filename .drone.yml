@@ -4,6 +4,7 @@ pipeline:
     image: quay.io/ukhomeofficedigital/cop-secrets
     environment:
       - DRONE_SERVER=https://drone.acp.homeoffice.gov.uk
+      - DEPLOY_ENV=dev
     secrets:
       - source: DEV_DRONE_AWS_ACCESS_KEY_ID
         target: AWS_ACCESS_KEY_ID
@@ -18,6 +19,7 @@ pipeline:
     image: quay.io/ukhomeofficedigital/cop-secrets
     environment:
       - DRONE_SERVER=https://drone.acp.homeoffice.gov.uk
+      - DEPLOY_ENV=staging
     secrets:
       - source: STAGING_DRONE_AWS_ACCESS_KEY_ID
         target: AWS_ACCESS_KEY_ID
@@ -25,8 +27,6 @@ pipeline:
         target: AWS_SECRET_ACCESS_KEY
       - source: DRONE_PUBLIC_TOKEN
         target: DRONE_TOKEN
-    commands:
-      - export DRONE_DEPLOY_TO=staging
     when:
       branch: master
       event: push
@@ -35,6 +35,7 @@ pipeline:
     image: quay.io/ukhomeofficedigital/cop-secrets
     environment:
       - DRONE_SERVER=https://drone.acp.homeoffice.gov.uk
+      - DEPLOY_ENV=production
     secrets:
       - source: PRODUCTION_DRONE_AWS_ACCESS_KEY_ID
         target: AWS_ACCESS_KEY_ID
@@ -42,8 +43,6 @@ pipeline:
         target: AWS_SECRET_ACCESS_KEY
       - source: DRONE_PUBLIC_TOKEN
         target: DRONE_TOKEN
-    commands:
-      - export DRONE_DEPLOY_TO=production
     when:
       branch: master
       event: push
