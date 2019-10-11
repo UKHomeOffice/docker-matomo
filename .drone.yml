@@ -28,7 +28,6 @@ pipeline:
     when:
       branch: master
       event: push
-      environment: staging
 
   synch_production_secrets:
     image: quay.io/ukhomeofficedigital/cop-secrets
@@ -44,7 +43,6 @@ pipeline:
     when:
       branch: master
       event: push
-      environment: production
 
   build:
     image: quay.io/ukhomeofficedigital/drone-docker
