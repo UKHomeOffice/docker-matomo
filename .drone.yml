@@ -26,7 +26,8 @@ pipeline:
       - source: DRONE_PUBLIC_TOKEN
         target: DRONE_TOKEN
     when:
-      event: deployment
+      branch: master
+      event: push
       environment: staging
 
   synch_production_secrets:
@@ -41,7 +42,8 @@ pipeline:
       - source: DRONE_PUBLIC_TOKEN
         target: DRONE_TOKEN
     when:
-      event: deployment
+      branch: master
+      event: push
       environment: production
 
   build:
@@ -80,7 +82,7 @@ pipeline:
         target: HOSTNAME
       - source: DEV_MATOMO_IMAGE
         target: MATOMO_IMAGE
-      - source: DEV_MATOMO_KUBE_NAMESPACE
+      - source: DEV_KUBE_NAMESPACE_COP_OPS
         target: KUBE_NAMESPACE
       - source: DEV_MATOMO_MYSQL_HOST
         target: MATOMO_MYSQL_HOST
@@ -130,7 +132,7 @@ pipeline:
         target: HOSTNAME
       - source: STAGING_MATOMO_IMAGE
         target: MATOMO_IMAGE
-      - source: STAGING_MATOMO_KUBE_NAMESPACE
+      - source: STAGING_KUBE_NAMESPACE_COP_OPS
         target: KUBE_NAMESPACE
       - source: STAGING_MATOMO_MYSQL_HOST
         target: MATOMO_MYSQL_HOST
@@ -180,7 +182,7 @@ pipeline:
         target: HOSTNAME
       - source: PRODUCTION_MATOMO_IMAGE
         target: MATOMO_IMAGE
-      - source: PRODUCTION_MATOMO_KUBE_NAMESPACE
+      - source: PRODUCTION_KUBE_NAMESPACE_COP_OPS
         target: KUBE_NAMESPACE
       - source: PRODUCTION_MATOMO_MYSQL_HOST
         target: MATOMO_MYSQL_HOST
