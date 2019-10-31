@@ -63,6 +63,7 @@ pipeline:
     tolerate: low
     fail_on_detection: false
     when:
+      branch: master
       event: push
 
   image_to_quay:
