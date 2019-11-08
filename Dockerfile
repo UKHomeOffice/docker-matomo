@@ -1,4 +1,4 @@
-FROM matomo:3.11.0
+FROM matomo:3.12.0
 
 ENV USERMAP_UID 33
 
