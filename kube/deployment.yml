@@ -33,19 +33,28 @@ spec:
             - name: MATOMO_MYSQL_USER
               value: {{.MATOMO_MYSQL_USER}}
             - name: MATOMO_MYSQL_PASSWORD
-              value: {{.MATOMO_MYSQL_PASSWORD}}
+              valueFrom:
+                secretKeyRef:
+                  name: "{{.MATOMO_NAME}}"
+                  key: mysqlPassword
             - name: MATOMO_MYSQL_PORT
               value: '{{.MATOMO_MYSQL_PORT}}'
             - name: MATOMO_MYSQL_TBL_PREFIX
               value: '{{.MATOMO_MYSQL_TBL_PREFIX}}'
             - name: MATOMO_SALT
-              value: '{{.MATOMO_SALT}}'
+              valueFrom:
+                secretKeyRef:
+                  name: "{{.MATOMO_NAME}}"
+                  key: salt
             - name: HOSTNAME
               value: '{{.HOSTNAME}}'
             - name: MATOMO_EMAIL_USER
               value: {{.MATOMO_EMAIL_USER}}
             - name: MATOMO_EMAIL_PASSWORD
-              value: {{.MATOMO_EMAIL_PASSWORD}}
+              valueFrom:
+                secretKeyRef:
+                  name: "{{.MATOMO_NAME}}"
+                  key: emailPassword
             - name: MATOMO_PORT
               value: '{{.MATOMO_PORT}}'
 
