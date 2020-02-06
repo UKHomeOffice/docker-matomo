@@ -58,7 +58,7 @@ spec:
             - name: MATOMO_PORT
               value: '{{.MATOMO_PORT}}'
 
-        - name: proxy
+        - name: {{.MATOMO_NAME}}-proxy
           image: "{{.NGINX_IMAGE}}:{{.NGINX_TAG}}"
           imagePullPolicy: Always
           securityContext:
