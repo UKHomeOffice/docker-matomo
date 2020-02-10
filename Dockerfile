@@ -3,8 +3,8 @@ FROM matomo:3.13.1
 ENV USERMAP_UID 33
 
 COPY docker-entrypoint.sh /entrypoint.sh
-COPY config.ini.php /var/www/html/config/
-COPY DBIP-City.mmdb /var/www/html/misc/
+COPY config.ini.php /usr/src/matomo/config/
+COPY DBIP-City.mmdb /usr/src/matomo/misc/
 
 RUN chmod 775 /entrypoint.sh
 
