@@ -4,7 +4,7 @@ ENV USERMAP_UID 33
 
 COPY docker-entrypoint.sh /entrypoint.sh
 COPY config.ini.php /var/www/html/config/
-COP DBIP-City.mmdb /var/www/html/misc/
+COPY DBIP-City.mmdb /var/www/html/misc/
 
 RUN chmod 775 /entrypoint.sh
 
