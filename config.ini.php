@@ -87,4 +87,12 @@ PluginsInstalled[] = "ProfessionalServices"
 PluginsInstalled[] = "UserId"
 PluginsInstalled[] = "CustomPiwikJs"
 PluginsInstalled[] = "Tour"
+PluginsInstalled[] = "Funnels"
+PluginsInstalled[] = "DBStats"
+PluginsInstalled[] = "Provider"
+
+[Funnels]
+funnels_num_max_rows_in_actions = 100
+funnels_num_max_rows_in_referrers = 50
+funnels_num_max_rows_populate_at_once = 60000
 
