@@ -57,6 +57,9 @@ spec:
                   key: emailPassword
             - name: MATOMO_PORT
               value: '{{.MATOMO_PORT}}'
+          volumeMounts:
+            - name: "{{.MATOMO_NAME}}"
+              mountPath: /var/www/html/plugins
 
         - name: {{.MATOMO_NAME}}-proxy
           image: "{{.NGINX_IMAGE}}:{{.NGINX_TAG}}"
@@ -86,3 +89,6 @@ spec:
       - name: certs
         secret:
           secretName: "{{.MATOMO_NAME}}-pod-tls"
+      - name: "{{.MATOMO_NAME}}"
+        persistentVolumeClaim:
+          claimName: "{{.MATOMO_NAME}}-{{.KUBE_NAMESPACE}}"
