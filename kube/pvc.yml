@@ -1,0 +1,10 @@
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: "{{.MATOMO_NAME}}-{{.KUBE_NAMESPACE}}"
+spec:
+  accessModes: ["ReadWriteOnce"]
+  resources:
+    requests:
+      storage: "{{ .MATOMO_SD_DATA_VOLUME_SIZE }}"
+  storageClassName: "{{ .MATOMO_STORAGE_CLASS }}"
