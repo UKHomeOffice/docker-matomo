@@ -85,9 +85,9 @@ Plugins[] = "ProfessionalServices"
 Plugins[] = "UserId"
 Plugins[] = "CustomPiwikJs"
 Plugins[] = "Tour"
-Plugins[] = "Funnels"
 Plugins[] = "DBStats"
 Plugins[] = "Provider"
+Plugins[] = "Funnels"
 
 [PluginsInstalled]
 PluginsInstalled[] = "Diagnostics"
@@ -153,9 +153,9 @@ PluginsInstalled[] = "ProfessionalServices"
 PluginsInstalled[] = "UserId"
 PluginsInstalled[] = "CustomPiwikJs"
 PluginsInstalled[] = "Tour"
-PluginsInstalled[] = "Funnels"
 PluginsInstalled[] = "DBStats"
 PluginsInstalled[] = "Provider"
+PluginsInstalled[] = "Funnels"
 
 [Funnels]
 funnels_num_max_rows_in_actions = 100
