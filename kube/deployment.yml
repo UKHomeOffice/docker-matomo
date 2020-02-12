@@ -58,8 +58,8 @@ spec:
             - name: MATOMO_PORT
               value: '{{.MATOMO_PORT}}'
           volumeMounts:
-            - name: "{{.MATOMO_NAME}}"
-              mountPath: /var/www/html/plugins
+            - name: MATOMO_FUNNELS
+              mountPath: /var/www/html/plugins/Funnels
 
         - name: {{.MATOMO_NAME}}-proxy
           image: "{{.NGINX_IMAGE}}:{{.NGINX_TAG}}"
