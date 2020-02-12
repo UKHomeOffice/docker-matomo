@@ -58,7 +58,7 @@ spec:
             - name: MATOMO_PORT
               value: '{{.MATOMO_PORT}}'
           volumeMounts:
-            - name: MATOMO_FUNNELS
+            - name: MATOMO_FUNNELS_PVC
               mountPath: /var/www/html/plugins/Funnels
 
         - name: {{.MATOMO_NAME}}-proxy
@@ -89,6 +89,6 @@ spec:
       - name: certs
         secret:
           secretName: "{{.MATOMO_NAME}}-pod-tls"
-      - name: "{{.MATOMO_NAME}}"
+      - name: MATOMO_FUNNELS_PVC
         persistentVolumeClaim:
           claimName: "{{.MATOMO_NAME}}-{{.KUBE_NAMESPACE}}"
