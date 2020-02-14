@@ -14,6 +14,9 @@ spec:
       labels:
         app: {{.MATOMO_NAME}}
     spec:
+      securityContext:
+        fsGroup: 33
+        runAsNonRoot: true
       containers:
         - name: matomo
           image: "{{.MATOMO_IMAGE}}:{{.MATOMO_TAG}}"
@@ -58,8 +61,8 @@ spec:
             - name: MATOMO_PORT
               value: '{{.MATOMO_PORT}}'
           volumeMounts:
-            - name: matomo-funnels-pvc
-              mountPath: /var/www/html/plugins/Funnels
+            - name: matomo-pvc
+              mountPath: /var/www/html/plugins
 
         - name: {{.MATOMO_NAME}}-proxy
           image: "{{.NGINX_IMAGE}}:{{.NGINX_TAG}}"
@@ -89,6 +92,6 @@ spec:
       - name: certs
         secret:
           secretName: "{{.MATOMO_NAME}}-pod-tls"
-      - name: matomo-funnels-pvc
+      - name: matomo-pvc
         persistentVolumeClaim:
           claimName: "{{.MATOMO_NAME}}-{{.KUBE_NAMESPACE}}"
