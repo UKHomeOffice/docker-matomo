@@ -27,6 +27,9 @@ To run the resulting Docker container:
 docker run -it matomo
 ```
 
+# Matomo Plugins
+After login into Matomo, Go to plugins section and search for new plugin to be installed and then install it
+
 # Drone secrets
 
 Name|Example value
