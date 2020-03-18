@@ -80,22 +80,6 @@ pipeline:
       branch: master
       event: push
 
-  open-snow-change-dev:
-    image: quay.io/ukhomeofficedigital/snowtify:latest
-    secrets:
-      - source: DEV_SERVICE_NOW_PASSWORD
-        target: SNOW_TEST_PASS
-      - source: DEV_SERVICE_NOW_USERNAME
-        target: SNOW_TEST_USER
-    environment:
-      - SNOW_DESC=${DRONE_COMMIT_MESSAGE}
-      - SNOW_ENDPOINT=https://cto-change-dev.internal.cto-notprod.homeoffice.gov.uk/create
-      - SNOW_INT_ID_FILE=./internal-id
-      - SNOW_EXTERNAL_ID=${DRONE_REPO}:${DRONE_COMMIT_SHA}
-    when:
-      branch: master
-      event: push
-
   deploy_to_dev:
     image: quay.io/ukhomeofficedigital/kd
     secrets:
@@ -152,17 +136,38 @@ pipeline:
       branch: master
       event: push
 
+  create-change-desc-dev:
+    image: docker:git
+    commands:
+      - git show --name-only >> $SNOW_DESC_FILE
+    when:
+      branch: master
+      event: push
+
+  open-snow-change-dev:
+    image: quay.io/ukhomeofficedigital/snowtify:latest
+    secrets:
+      - source: DEV_SERVICE_NOW_PASSWORD
+        target: SNOW_TEST_PASS
+      - source: DEV_SERVICE_NOW_URL
+        target: SNOW_ENDPOINT
+      - source: DEV_SERVICE_NOW_USERNAME
+        target: SNOW_TEST_USER
+    environment:
+      - SNOW_EXTERNAL_ID=${DRONE_REPO}:${DRONE_COMMIT_SHA}
+    when:
+      branch: master
+      event: push
+
   complete-snow-change-dev:
     image: quay.io/ukhomeofficedigital/snowtify:latest
     secrets:
       - source: DEV_SERVICE_NOW_PASSWORD
         target: SNOW_TEST_PASS
+      - source: DEV_SERVICE_NOW_URL
+        target: SNOW_ENDPOINT
       - source: DEV_SERVICE_NOW_USERNAME
         target: SNOW_TEST_USER
-    environment:
-      - SNOW_DESC=${DRONE_COMMIT_SHA}
-      - SNOW_ENDPOINT=https://cto-change-dev.internal.cto-notprod.homeoffice.gov.uk/update
-      - SNOW_INT_ID_FILE=./internal-id
     comments: Successful deployment of ${DRONE_REPO}:${DRONE_COMMIT_SHA}
     deployment_outcome: success
     when:
@@ -175,12 +180,10 @@ pipeline:
     secrets:
       - source: DEV_SERVICE_NOW_PASSWORD
         target: SNOW_TEST_PASS
+      - source: DEV_SERVICE_NOW_URL
+        target: SNOW_ENDPOINT
       - source: DEV_SERVICE_NOW_USERNAME
         target: SNOW_TEST_USER
-    environment:
-      - SNOW_DESC=${DRONE_COMMIT_SHA}
-      - SNOW_ENDPOINT=https://cto-change-dev.internal.cto-notprod.homeoffice.gov.uk/update
-      - SNOW_INT_ID_FILE=./internal-id
     comments: Failed deployment of ${DRONE_REPO}:${DRONE_COMMIT_SHA}
     deployment_outcome: fail
     when:
@@ -317,3 +320,9 @@ pipeline:
       branch: master
       event: [ push, deployment ]
       status: [ success, failure ]
+
+matrix:                 # setup some common env vars
+  SNOW_DESC_FILE:
+    - /drone/src/change-desc.txt
+  SNOW_INT_ID_FILE:
+    - /drone/src/internal-id
