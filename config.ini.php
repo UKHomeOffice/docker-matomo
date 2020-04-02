@@ -165,6 +165,6 @@ funnels_num_max_rows_in_referrers = 50
 funnels_num_max_rows_populate_at_once = 60000
 
 [HeatmapSessionRecording]
-add_tracking_code_only_when_needed = 0
+add_tracking_code_only_when_needed = 1
 session_recording_sample_limits = "50,100,250,500,1000,2000,5000"
 
