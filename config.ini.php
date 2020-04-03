@@ -13,6 +13,7 @@ proxy_client_headers[] = "HTTP_X_FORWARDED_FOR"
 proxy_host_headers[] = "HTTP_X_FORWARDED_HOST"
 salt = "{{.MATOMO_SALT}}"
 trusted_hosts[] = "{{.HOSTNAME}}:10443"
+cors_domains[] = "*"
 force_ssl = 1
 
 [mail]
