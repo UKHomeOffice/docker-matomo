@@ -5,6 +5,7 @@ ENV USERMAP_UID 33
 COPY docker-entrypoint.sh /entrypoint.sh
 COPY config.ini.php /usr/src/matomo/config/
 COPY DBIP-City.mmdb /usr/src/matomo/misc/
+COPY piwik.php /usr/src/matomo/
 
 RUN chmod 755 /entrypoint.sh
 
