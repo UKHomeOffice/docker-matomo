@@ -119,10 +119,14 @@ pipeline:
         target: MATOMO_SD_DATA_VOLUME_SIZE
       - source: DEV_MATOMO_STORAGE_CLASS
         target: MATOMO_STORAGE_CLASS
+      - source: DEV_WWW_URL
+        target: WWW_URL
       - source: NGINX_IMAGE
         target: NGINX_IMAGE
       - source: NGINX_TAG
         target: NGINX_TAG
+      - source: PROTOCOL_HTTPS
+        target: PROTOCOL
     commands:
       - export MATOMO_TAG=$${DRONE_COMMIT_SHA}
       - kd --insecure-skip-tls-verify -f kube/pvc.yml
@@ -230,10 +234,14 @@ pipeline:
         target: MATOMO_SD_DATA_VOLUME_SIZE
       - source: STAGING_MATOMO_STORAGE_CLASS
         target: MATOMO_STORAGE_CLASS
+      - source: STAGING_WWW_URL
+        target: WWW_URL
       - source: NGINX_IMAGE
         target: NGINX_IMAGE
       - source: NGINX_TAG
         target: NGINX_TAG
+      - source: PROTOCOL_HTTPS
+        target: PROTOCOL
     commands:
       - export MATOMO_TAG=$${DRONE_COMMIT_SHA}
       - kd --insecure-skip-tls-verify -f kube/pvc.yml
@@ -286,10 +294,14 @@ pipeline:
         target: MATOMO_SD_DATA_VOLUME_SIZE
       - source: PRODUCTION_MATOMO_STORAGE_CLASS
         target: MATOMO_STORAGE_CLASS
+      - source: PRODUCTION_WWW_URL
+        target: WWW_URL
       - source: NGINX_IMAGE
         target: NGINX_IMAGE
       - source: NGINX_TAG
         target: NGINX_TAG
+      - source: PROTOCOL_HTTPS
+        target: PROTOCOL
     commands:
       - export MATOMO_TAG=$${DRONE_COMMIT_SHA}
       - kd --insecure-skip-tls-verify -f kube/pvc.yml
