@@ -137,7 +137,7 @@ pipeline:
       - kd --insecure-skip-tls-verify -f kube/deployment.yml
       - kd --insecure-skip-tls-verify -f kube/ingress.yml
     when:
-      branch: master
+      #branch: master
       event: push
 
   create-change-desc-dev:

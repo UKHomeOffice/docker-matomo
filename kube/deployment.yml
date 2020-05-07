@@ -84,7 +84,7 @@ spec:
               value: "FALSE"
             - name: ADD_NGINX_LOCATION_CFG
               value: |
-                client_max_body_size      50m;
+                client_max_body_size      10m;
                 add_header                X-Frame-Options 'ALLOW-FROM {{.PROTOCOL}}{{.WWW_URL}}' always;
           ports:
             - name: https
