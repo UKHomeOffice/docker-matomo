@@ -95,7 +95,7 @@ spec:
       volumes:
       - name: certs
         secret:
-          secretName: "{{.MATOMO_NAME}}-pod-tls"
+          secretName: "{{.MATOMO_NAME}}-pod-cmio"
       - name: matomo-pvc
         persistentVolumeClaim:
           claimName: "{{.MATOMO_NAME}}-{{.KUBE_NAMESPACE}}"
