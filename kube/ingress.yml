@@ -4,13 +4,13 @@ kind: Ingress
 metadata:
   name: {{.MATOMO_NAME}}-ingress
   labels:
-    stable.k8s.psg.io/kcm.class: default
+    cert-manager.io/solver: http01
   annotations:
+    cert-manager.io/enabled: "true"
     kubernetes.io/ingress.class: "nginx-external"
     ingress.kubernetes.io/force-ssl-redirect: "true"
     ingress.kubernetes.io/backend-protocol: "HTTPS"
     ingress.kubernetes.io/proxy-body-size: "25m"
-    stable.k8s.psg.io/kcm.provider: http
 spec:
   rules:
   - host: {{.HOSTNAME}}
