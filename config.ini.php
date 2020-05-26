@@ -18,7 +18,7 @@ force_ssl = 1
 
 [mail]
 transport = "smtp"
-host = "email-smtp.eu-west-1.amazonaws.com"
+host = "email-smtp.eu-west-2.amazonaws.com"
 type = "Login"
 username = "{{.MATOMO_EMAIL_USER}}"
 password = "{{.MATOMO_EMAIL_PASSWORD}}"
@@ -168,4 +168,3 @@ funnels_num_max_rows_populate_at_once = 60000
 [HeatmapSessionRecording]
 add_tracking_code_only_when_needed = 1
 session_recording_sample_limits = "50,100,250,500,1000,2000,5000"
-
