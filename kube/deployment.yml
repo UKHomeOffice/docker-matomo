@@ -85,7 +85,7 @@ spec:
             - name: ADD_NGINX_LOCATION_CFG
               value: |
                 client_max_body_size      25m;
-                add_header                X-Frame-Options 'ALLOW-FROM {{.PROTOCOL}}{{.WWW_URL}}' always;
+                add_header                'Access-Control-Allow-Origin' '*';
           ports:
             - name: https
               containerPort: 10443
