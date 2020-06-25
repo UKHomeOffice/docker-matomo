@@ -4,7 +4,7 @@ This Matomo is being developed by the UK Home Office. This Matomo is a web analy
 
 # Requirements
 
-* matomo 3.13.5
+* matomo 3.13.6
 
 # Usage
 
