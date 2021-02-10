@@ -21,7 +21,7 @@ host = "email-smtp.eu-west-2.amazonaws.com"
 type = "Login"
 username = "{{.MATOMO_EMAIL_USER}}"
 password = "{{.MATOMO_EMAIL_PASSWORD}}"
-encryption = "ssl"
+encryption = "tls"
 
 [Plugins]
 Plugins[] = "CorePluginsAdmin"
