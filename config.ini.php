@@ -7,6 +7,7 @@ password = "{{.MATOMO_MYSQL_PASSWORD}}"
 dbname = "{{.MATOMO_MYSQL_DBNAME}}"
 port = "{{.MATOMO_MYSQL_PORT}}"
 tables_prefix = "{{.MATOMO_MYSQL_TBL_PREFIX}}"
+charset = "utf8mb4"
 
 [General]
 proxy_client_headers[] = "HTTP_X_FORWARDED_FOR"
