@@ -10,7 +10,7 @@ COPY security.conf /etc/apache2/conf-available/
 RUN chmod 755 /entrypoint.sh
 
 RUN sed -i -e 's/:80/:9000/g' /etc/apache2/sites-enabled/000-default.conf ; \
-    sed -i -e 's/Listen 80/Listen 9000/g' /etc/apache2/ports.cof ; \
+    sed -i -e 's/Listen 80/Listen 9000/g' /etc/apache2/ports.conf ; \
     /usr/sbin/a2dismod status ; \
     rm -vf /etc/apache2/mods-available/status.conf /etc/apache2/mods-enabled/status.conf
 
