@@ -65,7 +65,6 @@ steps:
     target:
     - secrets
 
-
 - name: build
   pull: always
   image: 340268328991.dkr.ecr.eu-west-2.amazonaws.com/acp/dind
@@ -76,8 +75,8 @@ steps:
     event:
     - push
 
-
 - name: vulnerability-scan
+  pull: always
   image: 340268328991.dkr.ecr.eu-west-2.amazonaws.com/acp/anchore-submission:latest
   environment:
     DOCKERFILE: Dockerfile
@@ -316,16 +315,15 @@ steps:
     status:
     - success
     - failure
-    
 
 services:
 - name: docker
   image: 340268328991.dkr.ecr.eu-west-2.amazonaws.com/acp/dind
 
 - name: anchore-submission-server
-  image: 340268328991.dkr.ecr.eu-west-2.amazonaws.com/acp/anchore-submission:latest
   pull: always
+  image: 340268328991.dkr.ecr.eu-west-2.amazonaws.com/acp/anchore-submission:latest
   commands:
-    - /run.sh server
+  - /run.sh server
 
 ...
